@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nome do Seu Restaurante</title>
+
+    <style>
+        /* CSS Básico */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        body { font-family: 'Roboto', sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; }
+        header { background-color: #d32f2f; color: white; text-align: center; padding: 20px 0; }
+        main { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+        section { background-color: white; margin-bottom: 20px; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1, h2, h3, h4 { color: #333; }
+        h2 { border-bottom: 2px solid #d32f2f; padding-bottom: 10px; }
+        .item-menu { display: grid; grid-template-columns: 1fr auto; gap: 10px 20px; border-bottom: 1px solid #eee; padding: 15px 0; align-items: center; }
+        .item-menu:last-child { border-bottom: none; }
+        .item-menu h4 { margin: 0; color: #d32f2f; }
+        .item-menu .descricao { grid-column: 1 / -1; margin: 5px 0 0 0; font-size: 0.9em; color: #666; }
+        .item-menu .preco { grid-column: 2; grid-row: 1; font-weight: bold; font-size: 1.1em; text-align: right; margin: 0; }
+        .add-btn { grid-column: 2; background-color: #28a745; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; }
+        .add-btn:hover { background-color: #218838; }
+        #itens-pedido p { color: #333; font-style: normal; }
+        #total-pedido { font-weight: bold; font-size: 1.2em; color: #d32f2f; }
+        
+        /* CSS para o Novo Formulário */
+        #finalizar label { font-weight: bold; margin-top: 10px; margin-bottom: 5px; display: block; }
+        #finalizar input[type="text"], #finalizar input[type="tel"], #finalizar input[type="number"], #finalizar select, #finalizar textarea {
+            width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; font-family: 'Roboto', sans-serif; font-size: 1em;
+        }
+        .tipo-entrega-container label { font-weight: normal; margin-right: 20px; }
+        .campos-dinamicos { margin-top: 15px; }
+        #confirmar-pedido { width: 100%; font-size: 1.2em; padding: 15px; margin-top: 15px; background-color: #d32f2f; }
+        #confirmar-pedido:hover { background-color: #a02525; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Nome do Seu Restaurante</h1>
+        <p>O melhor sabor da cidade!</p>
+    </header>
+
+    <main>
+        <section id="menu">
+            <h2>Cardápio</h2>
+            <h3>Tira-Gostos (Petiscos)</h3>
+            <div class="item-menu" data-nome="Caldo de Sururu" data-preco="15.00">
+                <h4>Caldo de Sururu</h4>
+                <p class="preco">R$ 15,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Caldo de Camarão" data-preco="15.00">
+                <h4>Caldo de Camarão</h4>
+                <p class="preco">R$ 15,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Batata Frita" data-preco="25.00">
+                <h4>Batata Frita</h4>
+                <p class="preco">R$ 25,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Carne do Sol c/ Fritas" data-preco="55.00">
+                <h4>Carne do Sol c/ Fritas</h4>
+                <p class="descricao">(Carne do sol e Batata frita)</p>
+                <p class="preco">R$ 55,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Carne do Sol Porco c/ Fritas" data-preco="50.00">
+                <h4>Carne do Sol Porco c/ Fritas</h4>
+                <p class="descricao">(Carne de porco e Batata Frita)</p>
+                <p class="preco">R$ 50,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Tábua de Frios" data-preco="50.00">
+                <h4>Tábua de Frios</h4>
+                <p class="preco">R$ 50,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Lombo Suíno" data-preco="40.00">
+                <h4>Lombo Suíno</h4>
+                <p class="preco">R$ 40,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+
+            <h3>Refeições</h3>
+            <div class="item-menu" data-nome="Carne do Sol (Refeição)" data-preco="37.00">
+                <h4>Carne do Sol</h4>
+                <p class="descricao">(Acompanha Farofa e Salada Vinagrete)</p>
+                <p class="preco">R$ 37,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Carne do Sol Porco (Refeição)" data-preco="35.00">
+                <h4>Carne do Sol Porco</h4>
+                <p class="descricao">(Acompanha Farofa e Salada Vinagrete)</p>
+                <p class="preco">R$ 35,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Frango (Refeição)" data-preco="35.00">
+                <h4>Frango</h4>
+                <p class="descricao">(Acompanha Farofa e Salada Vinagrete)</p>
+                <p class="preco">R$ 35,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Asinha (06)" data-preco="35.00">
+                <h4>Asinha (06 unidades)</h4>
+                <p class="descricao">(Acompanha Farofa e Salada Vinagrete)</p>
+                <p class="preco">R$ 35,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+
+            <h3>Especialidades (Serve 02 Pessoas)</h3>
+            <div class="item-menu" data-nome="Barca Carne Do Sol" data-preco="65.00">
+                <h4>Barca Carne Do Sol</h4>
+                <p class="descricao">(Acompanha Arroz e Salada Vinagrete)</p>
+                <p class="preco">R$ 65,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Peixe Frito" data-preco="90.00">
+                <h4>Peixe Frito</h4>
+                <p class="descricao">(Acompanha Arroz, Feijão Tropeiro e Salada Vinagrete)</p>
+                <p class="preco">R$ 90,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Espetinhos" data-preco="15.00">
+                <h4>Espetinhos</h4>
+                <p class="preco">R$ 15,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+        </section>
+
+        <section id="pedido">
+            <h2>Seu Pedido</h2>
+            <div id="itens-pedido"><p>Seu carrinho está vazio.</p></div>
+            <p>Total: <span id="total-pedido">R$ 0,00</span></p>
+        </section>
+        
+        <section id="finalizar">
+            <h2>Finalizar Pedido</h2>
+            <label>Como você prefere receber?</label>
+            <div class="tipo-entrega-container">
+                <input type="radio" id="delivery" name="tipo-entrega" value="delivery" checked>
+                <label for="delivery">Delivery</label>
+                <input type="radio" id="salao" name="tipo-entrega" value="salao">
+                <label for="salao">Comer no Salão</label>
+            </div>
+            <div class="campos-dinamicos">
+                <label for="nome-cliente">Seu Nome:</label>
+                <input type="text" id="nome-cliente" placeholder="Digite seu nome completo">
+                <div id="campos-delivery">
+                    <label for="cep-cliente">CEP:</label>
+                    <input type="text" id="cep-cliente" placeholder="Digite o CEP e clique fora">
+                    <label for="rua-cliente">Rua:</label>
+                    <input type="text" id="rua-cliente" placeholder="Preenchimento automático">
+                    <label for="numero-cliente">Número:</label>
+                    <input type="text" id="numero-cliente" placeholder="Nº da casa/apto">
+                    <label for="bairro-cliente">Bairro:</label>
+                    <input type="text" id="bairro-cliente" placeholder="Preenchimento automático">
+                    <label for="telefone-cliente">Seu Telefone (WhatsApp):</label>
+                    <input type="tel" id="telefone-cliente" placeholder="75 99999-8888">
+                </div>
+                <div id="campo-mesa" style="display: none;">
+                    <label for="numero-mesa">Número da Mesa:</label>
+                    <input type="number" id="numero-mesa" placeholder="Ex: 05">
+                </div>
+                <label for="observacao">Observações:</label>
+                <textarea id="observacao" rows="3" placeholder="Ex: Tirar a cebola, carne mal passada, etc."></textarea>
+                <label for="forma-pagamento">Forma de Pagamento:</label>
+                <select id="forma-pagamento">
+                    <option value="Pix">Pix</option>
+                    <option value="Cartao de Credito">Cartão de Crédito</option>
+                    <option value="Cartao de Debito">Cartão de Débito</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                </select>
+                <div id="campo-troco" style="display: none;">
+                    <label for="troco-para">Troco para quanto?</label>
+                    <input type="text" id="troco-para" placeholder="Ex: 50,00">
+                </div>
+            </div>
+            <button id="confirmar-pedido">Confirmar Pedido via WhatsApp</button>
+        </section>
+    </main>
+
+    <script>
+        // --- SEÇÃO DE PREPARAÇÃO ---
+        const carrinho = [];
+        const botoesAdicionar = document.querySelectorAll('.add-btn');
+        const itensPedidoDiv = document.getElementById('itens-pedido');
+        const totalPedidoSpan = document.getElementById('total-pedido');
+        const confirmarPedidoBtn = document.getElementById('confirmar-pedido');
+        const tipoEntregaRadios = document.querySelectorAll('input[name="tipo-entrega"]');
+        const camposDeliveryDiv = document.getElementById('campos-delivery');
+        const campoMesaDiv = document.getElementById('campo-mesa');
+        const formaPagamentoSelect = document.getElementById('forma-pagamento');
+        const campoTrocoDiv = document.getElementById('campo-troco');
+        const cepInput = document.getElementById('cep-cliente');
+
+        // --- LÓGICA DO CARRINHO ---
+        function atualizarVisualCarrinho() {
+            itensPedidoDiv.innerHTML = ''; let valorTotal = 0;
+            if (carrinho.length === 0) { itensPedidoDiv.innerHTML = '<p>Seu carrinho está vazio.</p>'; totalPedidoSpan.textContent = 'R$ 0,00'; return; }
+            const itensAgrupados = {};
+            carrinho.forEach(item => { if (itensAgrupados[item.nome]) { itensAgrupados[item.nome].quantidade++; } else { itensAgrupados[item.nome] = { nome: item.nome, preco: item.preco, quantidade: 1 }; } });
+            for (const nomeDoItem in itensAgrupados) { const item = itensAgrupados[nomeDoItem]; const itemDoCarrinho = document.createElement('p'); itemDoCarrinho.textContent = `${item.quantidade}x ${item.nome}`; itensPedidoDiv.appendChild(itemDoCarrinho); valorTotal += item.preco * item.quantidade; }
+            totalPedidoSpan.textContent = `R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
+        }
+        botoesAdicionar.forEach(botao => { botao.addEventListener('click', () => { const itemMenu = botao.closest('.item-menu'); const nome = itemMenu.dataset.nome; const preco = parseFloat(itemMenu.dataset.preco); carrinho.push({ nome: nome, preco: preco }); atualizarVisualCarrinho(); }); });
+
+        // --- LÓGICA PARA CAMPOS DINÂMICOS ---
+        tipoEntregaRadios.forEach(radio => { radio.addEventListener('change', (e) => { if (e.target.value === 'delivery') { camposDeliveryDiv.style.display = 'block'; campoMesaDiv.style.display = 'none'; } else { camposDeliveryDiv.style.display = 'none'; campoMesaDiv.style.display = 'block'; } }); });
+        formaPagamentoSelect.addEventListener('change', (e) => { if (e.target.value === 'Dinheiro') { campoTrocoDiv.style.display = 'block'; } else { campoTrocoDiv.style.display = 'none'; } });
+
+        // --- MÁGICA DO CEP (Versão Corrigida e Segura) ---
+        if (cepInput) {
+            cepInput.addEventListener('blur', async () => {
+                const cep = cepInput.value.replace(/\D/g, '');
+                if (cep.length !== 8) { return; }
+                document.getElementById('rua-cliente').value = "Buscando...";
+                document.getElementById('bairro-cliente').value = "Buscando...";
+                try {
+                    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                    if (!response.ok) { throw new Error('Erro ao buscar o CEP.'); }
+                    const data = await response.json();
+                    if (data.erro) {
+                        document.getElementById('rua-cliente').value = ""; document.getElementById('bairro-cliente').value = "";
+                        alert("CEP não encontrado. Por favor, digite o endereço manualmente.");
+                    } else {
+                        document.getElementById('rua-cliente').value = data.logradouro;
+                        document.getElementById('bairro-cliente').value = data.bairro;
+                        document.getElementById('numero-cliente').focus();
+                    }
+                } catch (error) {
+                    document.getElementById('rua-cliente').value = ""; document.getElementById('bairro-cliente').value = "";
+                    alert("Não foi possível buscar o CEP. Verifique sua conexão ou digite o endereço manualmente.");
+                }
+            });
+        }
+
+        // --- BOTÃO DE CONFIRMAÇÃO COM LÓGICA FINAL ---
+        confirmarPedidoBtn.addEventListener('click', () => {
+            if (carrinho.length === 0) { alert("Seu carrinho está vazio!"); return; }
+            const nomeCliente = document.getElementById('nome-cliente').value.trim();
+            if (nomeCliente === "") { alert("Por favor, digite seu nome."); return; }
+            const tipoEntrega = document.querySelector('input[name="tipo-entrega"]:checked').value;
+            let codigoPedido = ''; let detalhesEntrega = ''; let detalhesPagamento = '';
+            if (tipoEntrega === 'delivery') {
+                const rua = document.getElementById('rua-cliente').value.trim(); const numero = document.getElementById('numero-cliente').value.trim(); const bairro = document.getElementById('bairro-cliente').value.trim(); const telefone = document.getElementById('telefone-cliente').value.trim();
+                if (rua === "" || numero === "" || bairro === "" || telefone === "") { alert("Para delivery, por favor preencha todos os campos de endereço e telefone."); return; }
+                codigoPedido = `${nomeCliente.split(' ')[0].toUpperCase()}-${telefone.slice(-4)}`;
+                detalhesEntrega = `*Telefone:* ${telefone}\n*Endereço:* ${rua}, Nº ${numero} - ${bairro}\n`;
+            } else {
+                const mesa = document.getElementById('numero-mesa').value.trim(); if (mesa === "") { alert("Por favor, informe o número da mesa."); return; }
+                codigoPedido = `${nomeCliente.split(' ')[0].toUpperCase()}-MESA${mesa}`; detalhesEntrega = `*Para a Mesa:* ${mesa}\n`;
+            }
+            const formaPagamento = formaPagamentoSelect.value;
+            detalhesPagamento = `*Forma de Pagamento:* ${formaPagamento}\n`;
+            if (formaPagamento === 'Dinheiro') { const troco = document.getElementById('troco-para').value.trim(); if (troco !== "") { detalhesPagamento += `*Troco para:* R$ ${troco}\n`; } }
+            const observacao = document.getElementById('observacao').value.trim();
+            if (observacao !== "") { detalhesEntrega += `*Observações:* ${observacao}\n`; }
+            const agora = new Date();
+            const dataHoraFormatada = `${agora.toLocaleDateString('pt-BR')} às ${agora.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'})}`;
+            let mensagem = `*Novo Pedido*\n\n`;
+            mensagem += `*Data/Hora:* ${dataHoraFormatada}\n`;
+            mensagem += `*Cód. Pedido:* ${codigoPedido}\n`;
+            mensagem += `*Cliente:* ${nomeCliente}\n\n`;
+            mensagem += `*Detalhes da Entrega:*\n${detalhesEntrega}\n`;
+            mensagem += `*Detalhes do Pagamento:*\n${detalhesPagamento}\n`;
+            mensagem += `*Itens do Pedido:*\n`;
+            const itensAgrupados = {};
+            carrinho.forEach(item => { if (itensAgrupados[item.nome]) { itensAgrupados[item.nome].quantidade++; } else { itensAgrupados[item.nome] = { nome: item.nome, preco: item.preco, quantidade: 1 }; } });
+            let valorTotal = 0;
+            for (const nomeDoItem in itensAgrupados) { const item = itensAgrupados[nomeDoItem]; const subtotal = item.preco * item.quantidade; mensagem += `- ${item.quantidade}x ${item.nome} (R$ ${subtotal.toFixed(2).replace('.', ',')})\n`; valorTotal += subtotal; }
+            mensagem += `\n*Total do Pedido: R$ ${valorTotal.toFixed(2).replace('.', ',')}*`;
+            const numeroRestaurante = '5575988071435';
+            const linkWhatsApp = `https://wa.me/${numeroRestaurante}?text=${encodeURIComponent(mensagem)}`;
+            window.open(linkWhatsApp, '_blank');
+        });
+    </script>
+</body>
+</html>
