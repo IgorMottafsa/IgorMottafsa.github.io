@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JMS Restaurante</title>dddddd
+
+    <style>
+        /* Importando uma fonte mais bonita do Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        /* --- Estilos Gerais --- */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* --- Layout Principal --- */
+        header {
+            background-color: #d32f2f;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        section {
+            background-color: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3, h4 {
+            color: #333;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            border-bottom: 2px solid #d32f2f;
+            padding-bottom: 10px;
+        }
+
+        /* --- Estilo do Cardápio --- */
+        .item-menu {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px 20px;
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+            align-items: center;
+        }
+
+        .item-menu:last-child {
+            border-bottom: none;
+        }
+
+        .item-menu h4 {
+            margin: 0;
+            color: #d32f2f;
+        }
+
+        .item-menu .descricao {
+            grid-column: 1 / -1;
+            margin: 5px 0 0 0;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .item-menu .preco {
+            grid-column: 2;
+            grid-row: 1;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-align: right;
+            margin: 0;
+        }
+
+        /* --- Estilo dos Botões --- */
+        .add-btn, #confirmar-pedido {
+            grid-column: 2;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-btn:hover, #confirmar-pedido:hover {
+            background-color: #218838;
+        }
+
+        /* --- Estilo da Seção do Pedido --- */
+        #itens-pedido p {
+            color: #333;
+            font-style: normal;
+        }
+
+        #total-pedido {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #d32f2f;
+        }
+
+        #finalizar input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+    </style>
+
+</head>
+<body>
+
+    <header>
+        <h1>Nome do Seu Restaurante</h1>
+        <p>O melhor sabor da cidade!</p>
+    </header>
+
+    <main>
+        <section id="menu">
+            <h2>Cardápio</h2>
+
+            <h3>Tira-Gostos (Petiscos)</h3>
+            <div class="item-menu" data-nome="Caldo de Sururu" data-preco="15.00">
+                <h4>Caldo de Sururu</h4>
+                <p class="preco">R$ 15,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Caldo de Camarão" data-preco="15.00">
+                <h4>Caldo de Camarão</h4>
+                <p class="preco">R$ 15,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Batata Frita" data-preco="25.00">
+                <h4>Batata Frita</h4>
+                <p class="preco">R$ 25,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Carne do Sol c/ Fritas" data-preco="55.00">
+                <h4>Carne do Sol c/ Fritas</h4>
+                <p class="descricao">(Carne do sol e Batata frita)</p>
+                <p class="preco">R$ 55,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Carne do Sol Porco c/ Fritas" data-preco="50.00">
+                <h4>Carne do Sol Porco c/ Fritas</h4>
+                <p class="descricao">(Carne de porco e Batata Frita)</p>
+                <p class="preco">R$ 50,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Tábua de Frios" data-preco="50.00">
+                <h4>Tábua de Frios</h4>
+                <p class="preco">R$ 50,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Lombo Suíno" data-preco="40.00">
+                <h4>Lombo Suíno</h4>
+                <p class="preco">R$ 40,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+
+            <h3>Refeições</h3>
+            <div class="item-menu" data-nome="Carne do Sol (Refeição)" data-preco="37.00">
+                <h4>Carne do Sol</h4>
+                <p class="descricao">(Acompanha Farofa e Salada Vinagrete)</p>
+                <p class="preco">R$ 37,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Carne do Sol Porco (Refeição)" data-preco="35.00">
+                <h4>Carne do Sol Porco</h4>
+                <p class="descricao">(Acompanha Farofa e Salada Vinagrete)</p>
+                <p class="preco">R$ 35,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Frango (Refeição)" data-preco="35.00">
+                <h4>Frango</h4>
+                <p class="descricao">(Acompanha Farofa e Salada Vinagrete)</p>
+                <p class="preco">R$ 35,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Asinha (06)" data-preco="35.00">
+                <h4>Asinha (06 unidades)</h4>
+                <p class="descricao">(Acompanha Farofa e Salada Vinagrete)</p>
+                <p class="preco">R$ 35,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+
+            <h3>Especialidades (Serve 02 Pessoas)</h3>
+            <div class="item-menu" data-nome="Barca Carne Do Sol" data-preco="65.00">
+                <h4>Barca Carne Do Sol</h4>
+                <p class="descricao">(Acompanha Arroz e Salada Vinagrete)</p>
+                <p class="preco">R$ 65,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Peixe Frito" data-preco="90.00">
+                <h4>Peixe Frito</h4>
+                <p class="descricao">(Acompanha Arroz, Feijão Tropeiro e Salada Vinagrete)</p>
+                <p class="preco">R$ 90,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+            <div class="item-menu" data-nome="Espetinhos" data-preco="15.00">
+                <h4>Espetinhos</h4>
+                <p class="preco">R$ 15,00</p>
+                <button class="add-btn">Adicionar</button>
+            </div>
+        </section>
+
+        <section id="pedido">
+            <h2>Seu Pedido</h2>
+            <div id="itens-pedido">
+                <p>Seu carrinho está vazio.</p>
+            </div>
+            <p>Total: <span id="total-pedido">R$ 0,00</span></p>
+        </section>
+
+        <section id="finalizar">
+            <h2>Finalizar Pedido</h2>
+            <label for="nome-cliente">Seu Nome:</label>
+            <input type="text" id="nome-cliente" placeholder="Digite seu nome aqui">
+            <button id="confirmar-pedido">Confirmar Pedido</button>
+        </section>
+    </main>
+
+    <script>
+        let carrinho = [];
+        const botoesAdicionar = document.querySelectorAll('.add-btn');
+        const itensPedidoDiv = document.getElementById('itens-pedido');
+        const totalPedidoSpan = document.getElementById('total-pedido');
+        const confirmarPedidoBtn = document.getElementById('confirmar-pedido');
+
+        function atualizarVisualCarrinho() {
+            itensPedidoDiv.innerHTML = '';
+            let valorTotal = 0;
+
+            if (carrinho.length === 0) {
+                itensPedidoDiv.innerHTML = '<p>Seu carrinho está vazio.</p>';
+                totalPedidoSpan.textContent = 'R$ 0,00';
+                return;
+            }
+
+            const itensAgrupados = {};
+            carrinho.forEach(item => {
+                if (itensAgrupados[item.nome]) {
+                    itensAgrupados[item.nome].quantidade++;
+                } else {
+                    itensAgrupados[item.nome] = {
+                        nome: item.nome,
+                        preco: item.preco,
+                        quantidade: 1,
+                    };
+                }
+            });
+
+            for (const nomeDoItem in itensAgrupados) {
+                const item = itensAgrupados[nomeDoItem];
+                const itemDoCarrinho = document.createElement('p');
+                itemDoCarrinho.textContent = `${item.quantidade}x ${item.nome}`;
+                itensPedidoDiv.appendChild(itemDoCarrinho);
+                
+                valorTotal += item.preco * item.quantidade;
+            }
+
+            totalPedidoSpan.textContent = `R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
+        }
+
+        botoesAdicionar.forEach(botao => {
+            botao.addEventListener('click', () => {
+                const itemMenu = botao.closest('.item-menu');
+                const nome = itemMenu.dataset.nome;
+                const preco = parseFloat(itemMenu.dataset.preco);
+
+                carrinho.push({ nome: nome, preco: preco });
+                atualizarVisualCarrinho();
+            });
+        });
+
+        confirmarPedidoBtn.addEventListener('click', () => {
+            const nomeCliente = document.getElementById('nome-cliente').value;
+
+            if (carrinho.length === 0) {
+                alert("Seu carrinho está vazio. Adicione itens antes de confirmar o pedido.");
+                return;
+            }
+
+            if (nomeCliente === "") {
+                alert("Por favor, digite seu nome para finalizar o pedido.");
+                return;
+            }
+
+            let mensagem = `*Novo Pedido*\n\n`;
+            mensagem += `*Cliente:* ${nomeCliente}\n\n`;
+            mensagem += `*Itens do Pedido:*\n`;
+
+            const itensAgrupados = {};
+            carrinho.forEach(item => {
+                if (itensAgrupados[item.nome]) {
+                    itensAgrupados[item.nome].quantidade++;
+                } else {
+                    itensAgrupados[item.nome] = { nome: item.nome, preco: item.preco, quantidade: 1 };
+                }
+            });
+
+            let valorTotal = 0;
+            for (const nomeDoItem in itensAgrupados) {
+                const item = itensAgrupados[nomeDoItem];
+                const subtotal = item.preco * item.quantidade;
+                mensagem += `- ${item.quantidade}x ${item.nome} (R$ ${subtotal.toFixed(2).replace('.', ',')})\n`;
+                valorTotal += subtotal;
+            }
+
+            mensagem += `\n*Total do Pedido: R$ ${valorTotal.toFixed(2).replace('.', ',')}*`;
+
+            const numeroRestaurante = '5575988071435';
+            const linkWhatsApp = `https://wa.me/${numeroRestaurante}?text=${encodeURIComponent(mensagem)}`;
+
+            window.open(linkWhatsApp, '_blank');
+        });
+    </script>
+
+</body>
+</html>
